@@ -1,50 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll("#blogCards .btn");
-    const list = document.getElementById("list");
-    const count = document.getElementById("count");
-    let length = buttons.length;
-    for (let i = 0; i < length; i++) {
-        buttons[i].addEventListener('click', function (e) {
-            let playerName = e.target.previousElementSibling.previousElementSibling;
-            const listItemCount = document.querySelectorAll("#list li").length;
-            if (listItemCount < 5) {
-                let li = document.createElement('li');
-                li.innerText = playerName.innerText;
-                list.appendChild(li)
-                e.target.setAttribute("disabled", true)
-                e.target.classList.add("disabled")
-            } else {
-                alert("You cannot add more than 5 Players.")
-            }
-            count.innerText = listItemCount + 1;
-        })
+    const countDownDate = new Date('10 september,2022').getTime();
+    setInterval(function () {
+        let now = new Date().getTime();
+        let distance = countDownDate - now;
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24))/(1000*60*60));
+        let minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+        let seconds = Math.floor((distance % (1000*60)/1000));
+        changeText('days', days)
+        changeText('hours',hours)
+        changeText('minutes',minutes)
+        changeText('seconds', seconds)
+      
+    }, 1000)
+ 
+    function changeText(ele,newText) {
+        let element = document.querySelector("." + ele);
+        return element.innerText = newText;
     }
-
-    // cost
-    const calculateBtn = document.getElementById("calculateBtn");
-    const perPlayerCost = document.getElementById("perPlayer").value;
-
-    calculateBtn.addEventListener("click", function () {
-        // number & perPlayerCode is greater than 0;
-        if (perPlayerCost >= 0) {
-            let totalSelectedPlayer = parseInt(count.innerText);
-            if (totalSelectedPlayer > 0) {
-                let totalPlayerExpense = parseInt(perPlayerCost) * totalSelectedPlayer;
-                document.getElementById("totalExpense").innerText = totalPlayerExpense;
-            }
-        }
-    })
-
-    // total Calculations
-    document.getElementById("calculateTotal").addEventListener("click", function () {
-        const manager = getValue("manager");
-        const coach = getValue('coach');
-        const totalExpense = getInnerText("totalExpense");
-        if (manager >= 0 && coach >= 0) {
-            let totalCost = manager + coach + totalExpense;
-            document.getElementById("total").innerText = totalCost;
-        }
-
-    })
-
+   
+ 
 })
